@@ -1,11 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.contrib.auth import authenticate, login, logout
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from functools import wraps
@@ -17,10 +16,11 @@ from django.contrib.auth.models import User, Group
 
 # API Views
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def login_view(request):
     username = request.data.get('username')
     password = request.data.get('password')
-    user = authenticate(username=username, password=password)
+    user = authenticate(request, username=username, password=password)
     if user:
         refresh = RefreshToken.for_user(user)
         return Response({
@@ -42,13 +42,18 @@ class TaskUpdateView(generics.UpdateAPIView):
     lookup_field = 'id'
     queryset = Task.objects.all()
 
+    def update(self, request, *args, **kwargs):
+        # Force partial=True for PUT to allow updating only status/report/hours
+        kwargs['partial'] = True
+        return super().update(request, *args, **kwargs)
+
 class TaskReportView(generics.RetrieveAPIView):
     serializer_class = TaskSerializer
     permission_classes = [IsAdminOrSuperAdmin]
     lookup_field = 'id'
     queryset = Task.objects.filter(status='completed')
 
-# Web Views for Admin Panel
+# Web Views for Admin Panel (unchanged)
 def admin_login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -100,8 +105,6 @@ def create_user(request):
         form = UserCreationFormExtended(request.POST)
         if form.is_valid():
             user = form.save()
-            if form.cleaned_data['role']:
-                user.groups.add(form.cleaned_data['role'])
             messages.success(request, 'User created.')
             return redirect('user_list')
     else:
@@ -115,7 +118,6 @@ def edit_user_role(request, pk):
     if request.method == 'POST':
         form = UserRoleForm(request.POST, instance=user)
         if form.is_valid():
-            # Clear existing groups first
             user.groups.clear()
             for group in form.cleaned_data['groups']:
                 user.groups.add(group)
