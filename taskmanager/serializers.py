@@ -19,13 +19,16 @@ class TaskSerializer(serializers.ModelSerializer):
         read_only_fields = ['id', 'assigned_to']
 
     def validate(self, data):
+        errors = {}
         status = data.get('status')
         if status == 'completed':
             if not data.get('completion_report'):
-                raise serializers.ValidationError({'completion_report': 'Required for completion.'})
+                errors['completion_report'] = 'Required for completion.'
             hours = data.get('worked_hours')
             if not hours or hours <= 0:
-                raise serializers.ValidationError({'worked_hours': 'Must be positive.'})
+                errors['worked_hours'] = 'Must be positive.'
+        if errors:
+            raise serializers.ValidationError(errors)
         return data
 
     def update(self, instance, validated_data):
