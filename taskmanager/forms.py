@@ -1,14 +1,31 @@
 from django import forms
 from django.contrib.auth.models import User, Group
-from django.contrib.auth.forms import UserCreationForm
 from .models import Task
 
-class UserCreationFormExtended(UserCreationForm):
-    role = forms.ModelChoiceField(queryset=Group.objects.all(), required=False)
+class UserCreationFormExtended(forms.ModelForm):
+    password1 = forms.CharField(widget=forms.PasswordInput, label='Password')
+    password2 = forms.CharField(widget=forms.PasswordInput, label='Confirm Password')
+    role = forms.ModelChoiceField(queryset=Group.objects.all(), required=False, empty_label="Select Role")
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2', 'role']
+        fields = ['username', 'email']
+
+    def clean_password2(self):
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError("Passwords don't match")
+        return password2
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data["password1"])
+        if commit:
+            user.save()
+        if self.cleaned_data.get('role'):
+            user.groups.add(self.cleaned_data['role'])
+        return user
 
 class UserRoleForm(forms.ModelForm):
     class Meta:
