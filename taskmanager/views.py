@@ -14,6 +14,9 @@ from .permissions import IsAdminOrSuperAdmin, IsTaskOwnerOrAdmin
 from .forms import UserCreationFormExtended, UserRoleForm, TaskForm
 from django.contrib.auth.models import User, Group
 
+def Home(request):
+    return render(request, 'admin_panel/welcome.html')
+
 # API Views
 @api_view(['POST'])
 @permission_classes([AllowAny])
