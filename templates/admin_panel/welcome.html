@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Task Management App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Welcome to Task Management App</h1>
+        <p class="lead text-center">This is the entry point for the admin panel and API. Below is a sitemap of available endpoints and pages.</p>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Admin Panel URLs</h2>
+                <ul class="list-group">
+                    <li class="list-group-item"><a href="/admin/">1. admin/</a></li>
+                    <li class="list-group-item"><a href="/admin-panel/login/">7. admin-panel/login/ [name='admin_login']</a></li>
+                    <li class="list-group-item"><a href="/admin-panel/logout/">8. admin-panel/logout/ [name='admin_logout']</a></li>
+                    <li class="list-group-item"><a href="/admin-panel/">9. admin-panel/ [name='admin_dashboard']</a></li>
+                    <li class="list-group-item"><a href="/admin-panel/users/">10. admin-panel/users/ [name='user_list']</a></li>
+                    <li class="list-group-item"><a href="/admin-panel/users/create/">11. admin-panel/users/create/ [name='create_user']</a></li>
+                    <li class="list-group-item"><a href="/admin-panel/users/1/edit-role/">12. admin-panel/users/&lt;int:pk&gt;/edit-role/ [name='edit_user'] (e.g., pk=1)</a></li>
+                    <li class="list-group-item"><a href="/admin-panel/users/1/delete/">13. admin-panel/users/&lt;int:pk&gt;/delete/ [name='delete_user'] (e.g., pk=1)</a></li>
+                    <li class="list-group-item"><a href="/admin-panel/admins/">14. admin-panel/admins/ [name='admin_list']</a></li>
+                    <li class="list-group-item"><a href="/admin-panel/tasks/">15. admin-panel/tasks/ [name='task_list']</a></li>
+                    <li class="list-group-item"><a href="/admin-panel/tasks/create/">16. admin-panel/tasks/create/ [name='create_task']</a></li>
+                    <li class="list-group-item"><a href="/admin-panel/tasks/1/">17. admin-panel/tasks/&lt;int:pk&gt;/ [name='task_detail'] (e.g., pk=1)</a></li>
+                    <li class="list-group-item"><a href="/admin-panel/tasks/1/update/">18. admin-panel/tasks/&lt;int:pk&gt;/update/ [name='update_task'] (e.g., pk=1)</a></li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h2>API Endpoints</h2>
+                <ul class="list-group">
+                    <li class="list-group-item"><a href="/api/auth/login/">2. api/auth/login/ [name='api_login']</a> (POST for JWT)</li>
+                    <li class="list-group-item"><a href="/api/auth/refresh/">3. api/auth/refresh/ [name='refresh']</a> (POST for token refresh)</li>
+                    <li class="list-group-item"><a href="/api/tasks/">4. api/tasks/ [name='task-list']</a> (GET list)</li>
+                    <li class="list-group-item"><a href="/api/tasks/1/">5. api/tasks/&lt;int:id&gt;/ [name='task-update'] (e.g., id=1; PUT for update)</a></li>
+                    <li class="list-group-item"><a href="/api/tasks/1/report/">6. api/tasks/&lt;int:id&gt;/report/ [name='task-report'] (e.g., id=1; GET for report)</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <p>Current Date: September 18, 2025</p>
+            <a href="/admin-panel/login/" class="btn btn-primary">Login to Admin Panel</a>
+            <a href="/api/tasks/" class="btn btn-secondary">Test API (Requires Auth)</a>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
