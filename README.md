@@ -73,7 +73,7 @@ Git (for cloning).
 **Steps**
 
 **Clone the Repository:**
-git clone https://github.com/yourusername/task-management-app.git
+git clone https://github.com/Eb1n-Babu/taskmanagement_application.git
 cd task-management-app
 
 **Set Up Virtual Environment:**
