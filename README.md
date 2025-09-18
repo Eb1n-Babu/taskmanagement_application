@@ -334,6 +334,44 @@ Implement views with role checks (e.g., using decorators or middleware).
 * Styling: Add Bootstrap/CDN to templates for responsive design.
 * Deployment: For production, use Gunicorn/Nginx; secure settings (e.g., SECRET_KEY, disable debug).
 
+
+**Deployment (Docker - SQLite Only)**
+
+Build Image: docker build --no-cache -t taskmanagement-django:v1.0.0 .
+Start Container (SQLite persists via volume): docker run -d --name taskmanagement-django-app -p 8000:8000 taskmanagement-django:v1.0.0
+
+Access: http://localhost:8000.
+
+Stop: docker stop taskmanagement-django-app && docker rm taskmanagement-django-app.
+
+Prod Tips: Set DEBUG=False in env, use Gunicorn (CMD ["gunicorn", "taskmanagement.wsgi"] in Dockerfile), Nginx reverse proxy (Docker implementation in progress).
+
+**How to Access the Shared App**
+
+Prerequisites:
+
+Docker installed (docker.com). Docker Hub account (free; login if private repo).
+
+Pull the Image : docker pull ebinbabu/taskmanagement-django:v1.0.0
+
+https://hub.docker.com/repository/docker/ebinbabu/taskmanagement-django
+
+Expected: Downloads ~150MB image in ~1 min. Verify: docker images | findstr taskmanagement-django.
+
+Run the Container (SQLite persists via volume; access at http://localhost:8000): docker run -d --name taskmanagement-django-app -p 8000:8000 ebinbabu/taskmanagement-django:v1.0.0
+
+Flags:
+
+-d: Run in background. --name taskmanagement-django-app: Container name. -p 8000:8000: Maps port (access UI at http://localhost:8000).
+
+Expected: Starts server; logs: docker logs taskmanagement-django-app  → "Starting development server at http://0.0.0.0:8000/". Verify: docker ps → "taskmanagement-django-app Up".
+
+Access the App:
+
+URL: http://localhost:8000 (Bootstrap UI loads).
+
+Stop & Clean: docker stop taskmanagement-django-app docker rm taskmanagement-django-app
+
 **Contact**
 [ebin.babu.in@icloud.com]
 
