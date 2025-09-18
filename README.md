@@ -1,9 +1,11 @@
 **Task Management Application with Task Completion Report**
 
-**Project Status
-Note: This project is still under active development as of September 18, 2025. 
-Some features and functions may not work properly or could be incomplete. Please report 
-any issues via GitHub, and feel free to contribute to improve it.**
+
+**Project Status**
+Note: This project is still under active development as of September 18, 2025. Some features and functions may not work 
+properly or could be incomplete. If you try to access some views without login, 
+no template will load as it is still developing. Make sure to login before accessing some views.
+Please report any issues via GitHub, and feel free to contribute to improve it.
 
 `Overview`
 This project enhances a Task Management Application by incorporating features for users to submit completion reports 
