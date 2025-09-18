@@ -7,10 +7,11 @@ from taskmanager.views import (
     # Web
     admin_login_view, admin_logout_view, admin_dashboard, user_list, create_user,
     edit_user_role, delete_user, admin_list, task_list, create_task, task_detail,
-    update_task
+    update_task , Home
 )
 
 urlpatterns = [
+    path('',Home,name='welcome'),
     # API
     path('api/auth/login/', login_view, name='api_login'),
     path('api/auth/refresh/', TokenRefreshView.as_view(), name='refresh'),
