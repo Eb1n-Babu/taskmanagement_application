@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Task Management Admin Panel{% endblock %}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Task Management Admin Panel</h1>
+        {% if user.is_authenticated %}
+            <p>Logged in as: {{ user.username }} | <a href="{% url 'admin_logout' %}">Logout</a></p>
+        {% endif %}
+        {% if messages %}
+            {% for message in messages %}
+                <p class="{% if message.tags == 'error' %}error{% else %}success{% endif %}">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

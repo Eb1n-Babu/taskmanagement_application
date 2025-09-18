@@ -1,0 +1,11 @@
+{% extends 'admin_panel/base.html' %}
+{% block title %}{% if form.instance.pk %}Edit{% else %}Create{% endif %} Task{% endblock %}
+{% block content %}
+    <h2>{% if form.instance.pk %}Edit Task: {{ form.instance.title }}{% else %}Create New Task{% endif %}</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">{% if form.instance.pk %}Update{% else %}Create{% endif %} Task</button>
+        <a href="{% url 'task_list' %}">Cancel</a>
+    </form>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'admin_panel/base.html' %}
+{% block title %}Users List{% endblock %}
+{% block content %}
+    <h2>All Users</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email|default:"N/A" }}</td>
+                <td>
+                    {% for group in user.groups.all %}
+                        {{ group.name }}{% if not forloop.last %}, {% endif %}
+                    {% empty %}
+                        None
+                    {% endfor %}
+                </td>
+                <td>
+                    <a href="{% url 'edit_user' user.id %}">Edit Role</a> |
+                    <a href="{% url 'delete_user' user.id %}" onclick="return confirm('Are you sure you want to delete {{ user.username }}?')">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5">No users found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p><a href="{% url 'create_user' %}">Create New User</a></p>
+{% endblock %}

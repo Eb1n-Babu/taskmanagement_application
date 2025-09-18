@@ -1,0 +1,10 @@
+{% extends 'admin_panel/base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+    <h2>Dashboard</h2>
+    <ul>
+        <li><a href="{% url 'user_list' %}">Manage Users</a></li>
+        <li><a href="{% url 'admin_list' %}">Manage Admins</a></li>
+        <li><a href="{% url 'task_list' %}">Manage Tasks</a></li>
+    </ul>
+{% endblock %}
